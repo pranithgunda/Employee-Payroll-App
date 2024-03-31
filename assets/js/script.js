@@ -51,6 +51,8 @@ function groupEmployeeInfo(firstName,lastName,salary){
   firstName =  prompt("Enter First Name:");
   lastName  =  prompt("Enter Last Name:");
   salary    =  prompt("Enter Salary:");
+  
+  // Check if salary is number, else default to 0
 
   salary =  isNaN(salary) ? 0 : salary;
 
