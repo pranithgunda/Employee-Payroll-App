@@ -1,17 +1,32 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
-// Collect employee data
-// Function returns an array of employee objects
+// Function collects employee data and returns an array of employee objects
 const collectEmployees = function() {
-
-  //Define employee object
-
-  let employees = {};
 
   //Define employees array
 
   let employeesArray = [];
+
+  // Define function to insert employee info into object and push to array if employee variables are not null, else set variables to null
+
+function groupEmployeeInfo(firstName,lastName,salary){
+  if(firstName != "" && lastName != "" && salary != ""){
+
+    //Define employee object inside function to instantiate everytime function is called to not override previous information
+    let employees = {};
+
+    employees['firstName'] = firstName;
+    employees['lastName']  = lastName;
+    employees['salary']    = salary;
+
+    employeesArray.push(employees);
+  }else{
+    firstName = "";
+    lastName  = "";
+    salary    = "";
+  }
+}
 
   //prompt user for input. prompt method displays a dialog box that prompts the user for input
 
@@ -23,20 +38,11 @@ const collectEmployees = function() {
 
   salary =  isNaN(salary) ? 0 : salary;
 
-  // Insert into object and push to array if above attributes are not null else set them to null
+  //Call function to insert into employee object and push to array
 
-  if(firstName != "" && lastName != "" && salary != ""){
-    employees['firstName'] = firstName;
-    employees['lastName']  = lastName;
-    employees['salary']    = salary;
-    employeesArray.push(employees);
-  }else{
-    firstName = "";
-    lastName  = "";
-    salary    = "";
-  }
-
-  // Confirm if user wants to add another employee, clicking 'ok' returns true and 'cancel' returns false
+  groupEmployeeInfo(firstName,lastName,salary);
+  
+ // Confirm if user wants to add another employee, clicking 'ok' returns true and 'cancel' returns false
 
   let addAnotherEmployee = confirm("Do you want to add another employee ?");
 
@@ -50,22 +56,10 @@ const collectEmployees = function() {
 
   // Insert into object and push to array if above attributes are not null else set them to null
 
-  if(firstName != "" && lastName != "" && salary != ""){
+  groupEmployeeInfo(firstName,lastName,salary);
 
-    // Instantiate object to not override previously entered data
-    let employees = {};
+  addAnotherEmployee = confirm("Do you want to add another employee ?");
 
-    employees['firstName'] = firstName;
-    employees['lastName']  = lastName;
-    employees['salary']    = salary;
-
-    employeesArray.push(employees);
-  }else{
-    firstName = "";
-    lastName  = "";
-    salary    = "";
-  }
-    addAnotherEmployee = confirm("Do you want to add another employee ?");
   }
   return employeesArray;
 }
