@@ -11,10 +11,13 @@ and perform calculations for average salary. DOM manipulation was used to genera
 
 ## Screenshot
 
-coming soon
+![Employee-Payroll-App-1](assets/images/Emp-Tracker-1.png)
+
+![Employee-Payroll-App-2](assets/images/Emp-Tracker-2.png)
 
 ## Link to deployed site
 
-coming soon
+https://pranithgunda.github.io/Employee-Payroll-App/
+
 
 
