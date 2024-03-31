@@ -1,58 +1,51 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
-// Collect employee data
-// Function returns an array of employee objects
+//Instantiate object of Intl.NumberFormat to format salary as US Currency
+
+let USDollar = new Intl.NumberFormat('en-US',{
+  style:'currency',
+  currency:'USD'
+});
+
+// Function collects employee data and returns an array of employee objects
 const collectEmployees = function() {
 
-  //Define employee object
+  //Define employee attributes and employee array
 
-  let employees = {};
-
-  //Define employees array
-
+  let firstName = '';
+  let lastName = '';
+  let salary = 0;
   let employeesArray = [];
 
-  //prompt user for input. prompt method displays a dialog box that prompts the user for input
+  
+  //Define function to capture employee information
 
-  let firstName =  prompt("Enter First Name:");
-  let lastName  =  prompt("Enter Last Name:");
-  let salary    =  prompt("Enter Salary:");
+  function captureEmployeeInfo(){
 
-  // Check if salary is number, else default to 0
+    //prompt user for input. prompt method displays a dialog box that prompts the user for input
 
-  salary =  isNaN(salary) ? 0 : salary;
+    firstName =  prompt("Enter First Name:");
+    lastName  =  prompt("Enter Last Name:");
+    salary    =  prompt("Enter Salary:");
 
-  // Insert into object and push to array if above attributes are not null else set them to null
+    // Check if salary is number, else default to 0
 
-  if(firstName != "" && lastName != "" && salary != ""){
-    employees['firstName'] = firstName;
-    employees['lastName']  = lastName;
-    employees['salary']    = salary;
-    employeesArray.push(employees);
-  }else{
-    firstName = "";
-    lastName  = "";
-    salary    = "";
+    salary =  isNaN(salary) ? 0 : salary;
+
+    // Format salary to USD
+
+    salary = USDollar.format(salary);
+
+
   }
 
-  // Confirm if user wants to add another employee, clicking 'ok' returns true and 'cancel' returns false
+  // Define function to insert employee info into object and push to array if employee variables are not null, else set variables to null
 
-  let addAnotherEmployee = confirm("Do you want to add another employee ?");
+   function groupEmployeeInfo(firstName,lastName,salary){
+    if(firstName != "" && lastName != "" && salary != ""){
 
-  while(addAnotherEmployee){
-
-  firstName =  prompt("Enter First Name:");
-  lastName  =  prompt("Enter Last Name:");
-  salary    =  prompt("Enter Salary:");
-
-  salary =  isNaN(salary) ? 0 : salary;
-
-  // Insert into object and push to array if above attributes are not null else set them to null
-
-  if(firstName != "" && lastName != "" && salary != ""){
-
-    // Instantiate object to not override previously entered data
+    //Define employee object inside function to instantiate everytime function is called to not override previous information
     let employees = {};
 
     employees['firstName'] = firstName;
@@ -60,24 +53,70 @@ const collectEmployees = function() {
     employees['salary']    = salary;
 
     employeesArray.push(employees);
-  }else{
+    }else{
     firstName = "";
     lastName  = "";
     salary    = "";
+   }
   }
-    addAnotherEmployee = confirm("Do you want to add another employee ?");
+//  Capture employee info
+   
+  captureEmployeeInfo();
+    
+  //Call function to insert into employee object and push to array
+
+  groupEmployeeInfo(firstName,lastName,salary);
+  
+ // Confirm if user wants to add another employee, clicking 'ok' returns true and 'cancel' returns false
+
+  let addAnotherEmployee = confirm("Do you want to add another employee ?");
+
+  while(addAnotherEmployee){
+
+  //Capture employee info
+
+  captureEmployeeInfo();
+ 
+  //Call function to insert into employee object and push to array
+
+  groupEmployeeInfo(firstName,lastName,salary);
+
+  addAnotherEmployee = confirm("Do you want to add another employee ?");
+
   }
   return employeesArray;
 }
 
 // Display the average salary among all the employees
 const displayAverageSalary = (employeesArray) => {
+
+  let allEmployeesSalary=0;
+
+  for(let i=0; i<employeesArray.length; i++){
+    const employee = employeesArray[i];
+    // use dot notation to access employee salary
+    const employeeSalary = Number(employee.salary.replace(/[^0-9\.-]+/g,""));
+    allEmployeesSalary += employeeSalary;
+  }
+
+const noOfEmployees = employeesArray.length;
+const averageSalary = USDollar.format((allEmployeesSalary/noOfEmployees));
+
+console.log(`The average employee salary between our ${noOfEmployees} employees is ${averageSalary}`);
+
 }
 
-// Select a random employee
+// Select a random employee as winner and log to console
 const getRandomEmployee = function(employeesArray) {
 
-  
+  // function to return random no
+
+  function getRandomNo(no){
+    return Math.floor(Math.random()*no);
+  }
+  const noOfEmp =  employeesArray.length;
+  const employeeSelected =  employeesArray[getRandomNo(noOfEmp)];
+  console.log(`Congratulations to ${employeeSelected.firstName} ${employeeSelected.lastName}, our random drawing winner`);
 }
 
 
