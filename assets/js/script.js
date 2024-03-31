@@ -4,9 +4,37 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 // Function collects employee data and returns an array of employee objects
 const collectEmployees = function() {
 
-  //Define employees array
+  //Define employee attributes and employee array
 
+  let firstName = '';
+  let lastName = '';
+  let salary = 0;
   let employeesArray = [];
+
+  //Instantiate object of Intl.NumberFormat to format salary as US Currency
+
+  let USDollar = new Intl.NumberFormat('en-US',{
+    style:'currency',
+    currency:'USD'
+  });
+
+  //Define function to capture employee information
+
+  function captureEmployeeInfo(){
+
+    //prompt user for input. prompt method displays a dialog box that prompts the user for input
+
+    firstName =  prompt("Enter First Name:");
+    lastName  =  prompt("Enter Last Name:");
+    salary    =  prompt("Enter Salary:");
+
+    // Check if salary is number, else default to 0
+
+    salary =  isNaN(salary) ? 0 : salary;
+    salary = USDollar.format(salary);
+
+
+  }
 
   // Define function to insert employee info into object and push to array if employee variables are not null, else set variables to null
 
@@ -27,17 +55,10 @@ function groupEmployeeInfo(firstName,lastName,salary){
     salary    = "";
   }
 }
-
-  //prompt user for input. prompt method displays a dialog box that prompts the user for input
-
-  let firstName =  prompt("Enter First Name:");
-  let lastName  =  prompt("Enter Last Name:");
-  let salary    =  prompt("Enter Salary:");
-
-  // Check if salary is number, else default to 0
-
-  salary =  isNaN(salary) ? 0 : salary;
-
+//  Capture employee info
+   
+  captureEmployeeInfo();
+    
   //Call function to insert into employee object and push to array
 
   groupEmployeeInfo(firstName,lastName,salary);
@@ -48,15 +69,11 @@ function groupEmployeeInfo(firstName,lastName,salary){
 
   while(addAnotherEmployee){
 
-  firstName =  prompt("Enter First Name:");
-  lastName  =  prompt("Enter Last Name:");
-  salary    =  prompt("Enter Salary:");
-  
-  // Check if salary is number, else default to 0
+  //Capture employee info
 
-  salary =  isNaN(salary) ? 0 : salary;
-
-  // Insert into object and push to array if above attributes are not null else set them to null
+  captureEmployeeInfo(firstName,lastName,salary);
+ 
+  //Call function to insert into employee object and push to array
 
   groupEmployeeInfo(firstName,lastName,salary);
 
