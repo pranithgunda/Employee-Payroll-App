@@ -1,6 +1,13 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
+//Instantiate object of Intl.NumberFormat to format salary as US Currency
+
+let USDollar = new Intl.NumberFormat('en-US',{
+  style:'currency',
+  currency:'USD'
+});
+
 // Function collects employee data and returns an array of employee objects
 const collectEmployees = function() {
 
@@ -11,13 +18,7 @@ const collectEmployees = function() {
   let salary = 0;
   let employeesArray = [];
 
-  //Instantiate object of Intl.NumberFormat to format salary as US Currency
-
-  let USDollar = new Intl.NumberFormat('en-US',{
-    style:'currency',
-    currency:'USD'
-  });
-
+  
   //Define function to capture employee information
 
   function captureEmployeeInfo(){
@@ -31,6 +32,7 @@ const collectEmployees = function() {
     // Check if salary is number, else default to 0
 
     salary =  isNaN(salary) ? 0 : salary;
+    // Format salary to USD
     salary = USDollar.format(salary);
 
 
@@ -71,7 +73,7 @@ function groupEmployeeInfo(firstName,lastName,salary){
 
   //Capture employee info
 
-  captureEmployeeInfo(firstName,lastName,salary);
+  captureEmployeeInfo();
  
   //Call function to insert into employee object and push to array
 
@@ -85,6 +87,21 @@ function groupEmployeeInfo(firstName,lastName,salary){
 
 // Display the average salary among all the employees
 const displayAverageSalary = (employeesArray) => {
+
+  let allEmployeesSalary=0;
+
+  for(let i=0; i<employeesArray.length; i++){
+    const employee = employeesArray[i];
+    // use dot notation to access employee salary
+    const employeeSalary = Number(employee.salary.replace(/[^0-9\.-]+/g,""));
+    allEmployeesSalary += employeeSalary;
+  }
+
+const noOfEmployees = employeesArray.length;
+const averageSalary = USDollar.format((allEmployeesSalary/noOfEmployees));
+
+console.log(`The average employee salary between our ${noOfEmployees} employees is ${averageSalary}`);
+
 }
 
 // Select a random employee
