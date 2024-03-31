@@ -32,7 +32,9 @@ const collectEmployees = function() {
     // Check if salary is number, else default to 0
 
     salary =  isNaN(salary) ? 0 : salary;
+
     // Format salary to USD
+
     salary = USDollar.format(salary);
 
 
@@ -40,8 +42,8 @@ const collectEmployees = function() {
 
   // Define function to insert employee info into object and push to array if employee variables are not null, else set variables to null
 
-function groupEmployeeInfo(firstName,lastName,salary){
-  if(firstName != "" && lastName != "" && salary != ""){
+   function groupEmployeeInfo(firstName,lastName,salary){
+    if(firstName != "" && lastName != "" && salary != ""){
 
     //Define employee object inside function to instantiate everytime function is called to not override previous information
     let employees = {};
@@ -51,12 +53,12 @@ function groupEmployeeInfo(firstName,lastName,salary){
     employees['salary']    = salary;
 
     employeesArray.push(employees);
-  }else{
+    }else{
     firstName = "";
     lastName  = "";
     salary    = "";
+   }
   }
-}
 //  Capture employee info
    
   captureEmployeeInfo();
@@ -104,10 +106,17 @@ console.log(`The average employee salary between our ${noOfEmployees} employees 
 
 }
 
-// Select a random employee
+// Select a random employee as winner and log to console
 const getRandomEmployee = function(employeesArray) {
 
-  
+  // function to return random no
+
+  function getRandomNo(no){
+    return Math.floor(Math.random()*no);
+  }
+  const noOfEmp =  employeesArray.length;
+  const employeeSelected =  employeesArray[getRandomNo(noOfEmp)];
+  console.log(`Congratulations to ${employeeSelected.firstName} ${employeeSelected.lastName}, our random drawing winner`);
 }
 
 
